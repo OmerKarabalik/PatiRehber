@@ -1,4 +1,4 @@
-name: Build iOS & Android Test Packages
+name: Build iOS Appetize Package
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         run: flutter pub get
 
       - name: Build iOS Simulator
-        run: flutter build ios --simulator
+        run: flutter build ios --simulator --no-codesign
 
       - name: Package iOS Simulator App for Appetize
         run: |
@@ -36,34 +36,3 @@ jobs:
         with:
           name: PatiRehber-iOS-Appetize
           path: PatiRehber-iOS-Appetize.zip
-
-  build-android-apk:
-    name: Build Android Test APK
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-
-      - name: Install Dependencies
-        run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release
-
-      - name: Upload Android APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: PatiRehber-Android-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
