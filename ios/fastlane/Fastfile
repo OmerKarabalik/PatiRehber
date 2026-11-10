@@ -37,9 +37,11 @@ platform :ios do
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
       export_method: "app-store",
+      keychain_path: ENV["KEYCHAIN_PATH"],
+      keychain_password: ENV["KEYCHAIN_PASSWORD"],
       output_directory: "../build/ios/ipa",
       output_name: "PatiRehber.ipa",
-      silent: false
+      clean: false
     )
 
     upload_to_testflight(
