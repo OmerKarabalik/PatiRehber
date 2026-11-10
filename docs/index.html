@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PatiRehber - Evcil Hayvan Sağlık & Bakım Takip Asistanı</title>
+  <meta name="description" content="Kedi, köpek ve tüm evcil hayvanlarınızın aşı takvimi, ilaç saatleri, veteriner randevuları ve beslenme rehberi. %100 çevrimdışı ve güvenli.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2E7D32;
+      --primary-dark: #1B5E20;
+      --primary-light: #4CAF50;
+      --accent: #FF9800;
+      --bg: #F8FAF9;
+      --card-bg: #FFFFFF;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2E7D32, #4CAF50);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .btn-contact {
+      background: var(--primary);
+      color: white !important;
+      padding: 8px 18px;
+      border-radius: 99px;
+      transition: background 0.2s;
+    }
+
+    .btn-contact:hover {
+      background: var(--primary-dark);
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 40px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #E8F5E9;
+      color: var(--primary-dark);
+      padding: 6px 16px;
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 19px;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #0F172A;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .store-btn:hover {
+      transform: translateY(-2px);
+      background: #1E293B;
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #E8F5E9;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .support-section {
+      background: white;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 70px 24px;
+    }
+
+    .support-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+
+    .faq-item h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .contact-box {
+      margin-top: 48px;
+      background: #F1F5F9;
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .contact-box h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .email-link {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    .email-link:hover {
+      background: var(--primary-dark);
+    }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">🐾</div>
+        PatiRehber
+      </a>
+      <div class="nav-links">
+        <a href="#features">Özellikler</a>
+        <a href="#support">Destek & Yardım</a>
+        <a href="#privacy">Gizlilik</a>
+        <a href="#support" class="btn-contact">Bize Ulaşın</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="badge">🐾 Evcil Dostunuzun Akıllı Takip Asistanı</div>
+    <h1>Tüm Evcil Hayvan İhtiyaçlarınız<br>Tek Bir Uygulamada!</h1>
+    <p>PatiRehber ile kedi, köpek, kuş ve tüm sevimli dostlarınızın aşı takvimini, günlük ilaç alarmlarını, veteriner randevularını ve kilo takibini kolayca yönetin.</p>
+    <div class="hero-actions">
+      <div class="store-btn">
+        <span> App Store</span>
+        <small style="opacity: 0.8; font-size: 12px;">Çok Yakında</small>
+      </div>
+      <div class="store-btn">
+        <span>▶ Google Play</span>
+        <small style="opacity: 0.8; font-size: 12px;">Aktif Sürüm</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>Neden PatiRehber?</h2>
+      <p style="color: var(--text-muted);">Minik dostlarınızın sağlığını takip etmeyi zahmetsiz hale getirdik.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">💉</div>
+        <h3>Akıllı Aşı & İlaç Takvimi</h3>
+        <p>Sesli ve bildirimli akıllı alarmlar sayesinde aşı günlerini ve ilaç saatlerini asla unutmazsınız.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Dijital Sağlık Karnesi</h3>
+        <p>Kilo grafiği, alerji notları, mikroçip bilgileri ve geçmiş operasyon kayıtları tek bir ekranda güvenle saklanır.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h3>%100 Çevrimdışı & Güvenli</h3>
+        <p>İnternet bağlantısı gerektirmez. Tüm fotoğraflarınız ve verileriniz sadece kendi cihazınızda güvende kalır.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🥗</div>
+        <h3>Beslenme & Mama Planı</h3>
+        <p>Dostunuzun ırkına ve kilosuna göre ideal günlük porsiyon önerileri ve mama hatırlatıcıları.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚨</div>
+        <h3>Acil Durum & Belirti Rehberi</h3>
+        <p>Sık görülen hastalık semptomları ve ilk yardım tavsiyeleri ile acil anlarda daima yanınızdayız.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3>7 Dilde Tam Destek</h3>
+        <p>Türkçe, İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca ve Rusça dillerinde kusursuz yerelleştirme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support Section -->
+  <section class="support-section" id="support">
+    <div class="support-container">
+      <div class="section-title">
+        <h2>Destek ve Yardım Merkezi</h2>
+        <p style="color: var(--text-muted);">PatiRehber kullanıcı desteği ve sıkça sorulan sorular.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Uygulama internet olmadan çalışır mı?</h4>
+        <p>Evet, PatiRehber %100 çevrimdışı (offline) çalışır. İnternet bağlantınız olmasa dahi tüm aşı takviminiz, notlarınız ve alarmlarınız eksiksiz çalışmaya devam eder.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Verilerim nerede saklanıyor?</h4>
+        <p>Gizliliğinize son derece önem veriyoruz. Evcil hayvanınızın adı, fotoğrafları ve sağlık geçmişi hiçbir harici sunucuya iletilmez, yalnızca kendi telefonunuzun güvenli yerel hafızasında saklanır.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>PatiPlus üyeliğimi yeni telefonuma aktarabilir miyim?</h4>
+        <p>Evet! App Store veya Google Play hesabınız aynı olduğu sürece uygulamanın Ayarlar menüsünden "Satın Alımları Geri Yükle" (Restore Purchases) butonuna basarak ömür boyu üyeliğinizi anında aktarabilirsiniz.</p>
+      </div>
+
+      <div class="contact-box">
+        <h3>Sorunuz veya Öneriniz mi Var?</h3>
+        <p>Bize her zaman doğrudan e-posta ile ulaşabilirsiniz. En geç 24 saat içinde dönüş yapıyoruz.</p>
+        <a href="mailto:destek.patirehber@gmail.com" class="email-link">📧 Bize E-posta Gönderin</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Policy Summary -->
+  <section class="features" id="privacy" style="margin-top: 60px;">
+    <div class="card" style="max-width: 800px; margin: 0 auto; text-align: left;">
+      <h3 style="margin-bottom: 14px;">Gizlilik Politikası Özeti</h3>
+      <p style="font-size: 14.5px; line-height: 1.7; color: var(--text-muted);">
+        PatiRehber, kullanıcılarının gizliliğine saygı duyar. Uygulama kişisel veri toplamaz, üçüncü taraflarla paylaşmaz ve herhangi bir zorunlu üyelik gerektirmez. Uygulama içindeki tüm veriler (evcil hayvan bilgileri, hatırlatıcılar, fotoğraflar) cihazınızda yerel SQLite / SharedPreferences veritabanında saklanır. Detaylı bilgi ve sorularınız için destek ekibimizle iletişime geçebilirsiniz.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#features">Özellikler</a>
+      <a href="#support">Destek</a>
+      <a href="#privacy">Gizlilik Politikası</a>
+    </div>
+    <p>© 2026 PatiRehber. Tüm hakları saklıdır.</p>
+  </footer>
+
+</body>
+</html>
