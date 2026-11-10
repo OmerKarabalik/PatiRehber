@@ -53,18 +53,18 @@ jobs:
           cd ios
           fastlane prepare_signing
 
-      - name: Build iOS Archive & IPA
+      - name: Build Flutter iOS Release (Pre-compile assets & code)
         run: |
-          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+          flutter build ios --release --no-codesign
 
-      - name: Upload IPA to App Store Connect
+      - name: Build IPA and Upload to App Store Connect
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
         run: |
           cd ios
-          fastlane upload_ipa
+          fastlane build_and_upload
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
