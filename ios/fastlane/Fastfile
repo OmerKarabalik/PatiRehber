@@ -10,6 +10,28 @@ platform :ios do
       is_key_content_base64: false
     )
 
+    # 1. Automatically revoke any orphaned distribution certificates without private keys
+    UI.message("Checking for orphaned distribution certificates...")
+    begin
+      Spaceship::ConnectAPI.token = api_key
+      certs = Spaceship::ConnectAPI::Certificate.all
+      certs.each do |cert|
+        type = cert.certificate_type.to_s.upcase
+        if type.include?("DISTRIBUTION")
+          UI.message("Revoking orphaned cert: #{cert.id} (#{cert.display_name})...")
+          begin
+            cert.delete!
+          rescue => del_err
+            UI.message("Fallback delete for #{cert.id}: #{del_err.message}")
+            Spaceship::ConnectAPI.delete_certificate(certificate_id: cert.id)
+          end
+        end
+      end
+    rescue => ex
+      UI.important("Notice while checking certificates: #{ex.message}")
+    end
+
+    # 2. Generate brand new certificate and private key in the runner keychain
     get_certificates(
       api_key: api_key,
       development: false,
@@ -17,6 +39,7 @@ platform :ios do
       keychain_password: ENV["KEYCHAIN_PASSWORD"]
     )
 
+    # 3. Generate/fetch provisioning profile
     get_provisioning_profile(
       api_key: api_key,
       app_identifier: "com.patirehber.patiRehber",
@@ -27,18 +50,22 @@ platform :ios do
     profile_uuid = ENV["SIGH_UUID"]
     profile_name = ENV["SIGH_NAME"]
 
+    # 4. Install provisioning profile into macOS system directory
     sh("mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles")
     sh("cp \"#{profile_path}\" \"$HOME/Library/MobileDevice/Provisioning Profiles/#{profile_uuid}.mobileprovision\"")
 
+    # 5. Update Xcode code signing settings for Runner target
     update_code_signing_settings(
       use_automatic_signing: false,
       path: "Runner.xcodeproj",
       profile_name: profile_name,
       profile_uuid: profile_uuid,
       code_sign_identity: "Apple Distribution",
-      bundle_identifier: "com.patirehber.patiRehber"
+      bundle_identifier: "com.patirehber.patiRehber",
+      targets: ["Runner"]
     )
 
+    # 6. Build and archive IPA
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
@@ -50,11 +77,12 @@ platform :ios do
       export_options: {
         signingStyle: "manual",
         provisioningProfiles: {
-          "com.patirehber.patiRehber" => profile_uuid
+          "com.patirehber.patiRehber" => profile_name
         }
       }
     )
 
+    # 7. Upload to App Store Connect / TestFlight
     upload_to_testflight(
       api_key: api_key,
       ipa: "../build/ios/ipa/PatiRehber.ipa",
