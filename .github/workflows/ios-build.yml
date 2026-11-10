@@ -5,11 +5,15 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+concurrency:
+  group: ios-appstore-build
+  cancel-in-progress: true
+
 jobs:
   build-and-upload-appstore:
     name: Build & Upload to App Store Connect
     runs-on: macos-latest
-    needs: build-ios-simulator
+    timeout-minutes: 60
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -68,34 +72,3 @@ jobs:
         with:
           name: PatiRehber-iOS-AppStore-IPA
           path: build/ios/ipa/*.ipa
-
-  build-ios-simulator:
-    name: Build iOS Simulator App (Appetize Compatible)
-    runs-on: macos-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-
-      - name: Install Dependencies
-        run: flutter pub get
-
-      - name: Build iOS Simulator
-        run: flutter build ios --simulator --no-codesign
-
-      - name: Package iOS Simulator App for Appetize
-        run: |
-          cd build/ios/iphonesimulator
-          zip -r PatiRehber-iOS-Appetize.zip Runner.app
-          mv PatiRehber-iOS-Appetize.zip ../../../
-
-      - name: Upload iOS Appetize Zip
-        uses: actions/upload-artifact@v4
-        with:
-          name: PatiRehber-iOS-Appetize
-          path: PatiRehber-iOS-Appetize.zip
