@@ -1,4 +1,4 @@
-name: Build iOS Appetize Package
+name: Build and Upload iOS App Store Package
 
 on:
   push:
@@ -6,6 +6,82 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-and-upload-appstore:
+    name: Build & Upload to App Store Connect
+    runs-on: macos-14
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Configure App Store Connect API Key
+        run: |
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8
+          chmod 600 ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8
+
+      - name: Set up Keychain & Fastlane Signing
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          # Create temporary keychain for runner
+          KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security list-keychains -s "$KEYCHAIN_PATH" $(security list-keychains | tr -d '"')
+          security default-keychain -s "$KEYCHAIN_PATH"
+
+          # Use Fastlane to fetch or create Distribution Certificate & Provisioning Profile
+          gem install fastlane --no-document
+          fastlane run app_store_connect_api_key \
+            key_id:"$APP_STORE_CONNECT_KEY_ID" \
+            issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
+            key_content:"$APP_STORE_CONNECT_PRIVATE_KEY" \
+            is_key_content_base64:false
+
+          fastlane run get_certificates \
+            development:false \
+            keychain_path:"$KEYCHAIN_PATH" \
+            keychain_password:"$KEYCHAIN_PASSWORD"
+
+          fastlane run get_provisioning_profile \
+            app_identifier:"com.patirehber.patiRehber" \
+            development:false
+
+      - name: Build iOS Archive & IPA
+        run: |
+          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+
+      - name: Upload IPA to App Store Connect
+        env:
+          KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          xcrun altool --upload-app \
+            -f build/ios/ipa/*.ipa \
+            -t ios \
+            --apiKey "$KEY_ID" \
+            --apiIssuer "$ISSUER_ID"
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: PatiRehber-iOS-AppStore-IPA
+          path: build/ios/ipa/*.ipa
+
   build-ios-simulator:
     name: Build iOS Simulator App (Appetize Compatible)
     runs-on: macos-latest
