@@ -1,0 +1,42 @@
+﻿
+lib\screens\admin\admin_dashboard_screen.dart:15:        title: Text('Yönetici Paneli'),
+lib\screens\admin\admin_dashboard_screen.dart:40:            return Center(child: Text('Bekleyen bakıcı başvurusu yok.'
+));
+lib\screens\admin\developer_inbox_screen.dart:226:                        const SnackBar(content: Text('Mesaj silindi.'
+)),
+lib\screens\auth\login_screen.dart:19:      appBar: AppBar(title: Text('Giriş Yap')),
+lib\screens\auth\login_screen.dart:50:              child: Text('Giriş Yap'),
+lib\screens\auth\register_screen.dart:19:      appBar: AppBar(title: Text('Kayıt Ol')),
+lib\screens\auth\register_screen.dart:50:              child: Text('Kayıt Ol'),
+lib\screens\health\health_dashboard_screen.dart:48:                TextButton(onPressed: () => Navigator.pop(context), 
+child: Text('İptal')),
+lib\screens\health\health_dashboard_screen.dart:59:                  child: Text('Ekle'),
+lib\screens\become_sitter_screen.dart:27:      appBar: AppBar(title: Text('Profesyonel Bakıcı Ol')),
+lib\screens\become_sitter_screen.dart:133:        SnackBar(content: Text('Başvurunuz başarıyla alındı! Yönetici onayınd
+an sonra listeleneceksiniz.')),
+lib\screens\monetization_info_screen.dart:22:        title: Text('Gelir Paneli & Y�netim'),
+lib\screens\monetization_info_screen.dart:117:                      title: Text('Google AdMob Reklamlar�'),
+lib\screens\monetization_info_screen.dart:118:                      subtitle: const Text('Uygulama i�i banner ve ge�i� 
+reklamlar�.'),
+lib\screens\monetization_info_screen.dart:129:                      title: const Text('Sat�� Ortakl��� (Affiliate Linkl
+eri)'),
+lib\screens\monetization_info_screen.dart:130:                      subtitle: const Text('�nerilen �r�n linklerinden ko
+misyon kazan�n.'),
+lib\screens\monetization_info_screen.dart:141:                      title: const Text('PatiPremium (�yelik Modeli)'),
+lib\screens\monetization_info_screen.dart:142:                      subtitle: const Text('Reklam kald�rma ve s�n�rs�z m
+esajla�ma aboneli�i.'),
+lib\screens\monetization_info_screen.dart:224:                    child: Text('Bak�c� Kayd� Ekran�na Git'),
+lib\screens\my_pet_tracking_screen.dart:198:                                const SnackBar(content: Text('Evcil hayvan 
+profili silindi.')),
+lib\screens\secure_chat_screen.dart:45:      content: Text('Numaranız güvenle paylaşıldı.'),
+lib\screens\secure_chat_screen.dart:76:                  title: Text('Güvenli İletişim'),
+lib\screens\secure_chat_screen.dart:77:                  content: Text('Numaranız siz paylaşana kadar gizlidir. Yalnızc
+a güvendiğiniz kişilerle numaranızı paylaşın.'),
+lib\screens\secure_chat_screen.dart:78:                  actions: [TextButton(onPressed: () => Navigator.pop(context), 
+child: Text('Anladım'))],
+lib\screens\secure_chat_screen.dart:188:                    label: Text('Numaramı Güvenle Paylaş'),
+lib\screens\sitter_profile_screen.dart:16:        title: const Text('Bakıcı Profili'),
+lib\screens\sitter_profile_screen.dart:219:                      label: const Text('Mesaj Gönder / Sohbet Başlat'),
+lib\screens\sitter_search_screen.dart:137:                child: Text('Profili İncele & Mesaj Gönder'),
+
+
