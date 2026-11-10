@@ -49,8 +49,7 @@ jobs:
           # 2. Run Fastlane to fetch/create certificate, build IPA, and upload
           gem install fastlane --no-document
           cd ios
-          fastlane prepare_signing
-          fastlane build_and_upload
+          fastlane release
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
