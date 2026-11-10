@@ -36,30 +36,18 @@ jobs:
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
         run: |
           # Create temporary keychain for runner
-          KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain
-          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+          export KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain
+          export KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
           security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
           security list-keychains -s "$KEYCHAIN_PATH" $(security list-keychains | tr -d '"')
           security default-keychain -s "$KEYCHAIN_PATH"
 
-          # Use Fastlane to fetch or create Distribution Certificate & Provisioning Profile
+          # Use Fastlane lane to fetch or create Distribution Certificate & Provisioning Profile
           gem install fastlane --no-document
-          fastlane run app_store_connect_api_key \
-            key_id:"$APP_STORE_CONNECT_KEY_ID" \
-            issuer_id:"$APP_STORE_CONNECT_ISSUER_ID" \
-            key_content:"$APP_STORE_CONNECT_PRIVATE_KEY" \
-            is_key_content_base64:false
-
-          fastlane run get_certificates \
-            development:false \
-            keychain_path:"$KEYCHAIN_PATH" \
-            keychain_password:"$KEYCHAIN_PASSWORD"
-
-          fastlane run get_provisioning_profile \
-            app_identifier:"com.patirehber.patiRehber" \
-            development:false
+          cd ios
+          fastlane prepare_signing
 
       - name: Build iOS Archive & IPA
         run: |
@@ -67,14 +55,12 @@ jobs:
 
       - name: Upload IPA to App Store Connect
         env:
-          KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
         run: |
-          xcrun altool --upload-app \
-            -f build/ios/ipa/*.ipa \
-            -t ios \
-            --apiKey "$KEY_ID" \
-            --apiIssuer "$ISSUER_ID"
+          cd ios
+          fastlane upload_ipa
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4

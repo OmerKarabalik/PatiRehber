@@ -1,0 +1,44 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Fetch certificates and profiles using App Store Connect API Key"
+  lane :prepare_signing do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_PRIVATE_KEY"],
+      is_key_content_base64: false
+    )
+
+    get_certificates(
+      api_key: api_key,
+      development: false,
+      keychain_path: ENV["KEYCHAIN_PATH"],
+      keychain_password: ENV["KEYCHAIN_PASSWORD"]
+    )
+
+    get_provisioning_profile(
+      api_key: api_key,
+      app_identifier: "com.patirehber.patiRehber",
+      development: false
+    )
+  end
+
+  desc "Upload IPA to App Store Connect / TestFlight"
+  lane :upload_ipa do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_PRIVATE_KEY"],
+      is_key_content_base64: false
+    )
+
+    ipa_path = Dir["../build/ios/ipa/*.ipa"].first || Dir["build/ios/ipa/*.ipa"].first
+
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: ipa_path,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end
