@@ -197,29 +197,33 @@ class _RemindersScreenState extends State<RemindersScreen> {
 
   Widget _buildFilterChips() {
     final filters = ['Tümü', 'Randevu', 'Aşı', 'İlaç'];
-    return Row(
-      children: filters.map((f) {
-        final isSel = _selectedFilter == f;
-        return Padding(
-          padding: EdgeInsets.only(right: 8.w),
-          child: ChoiceChip(
-            label: Text(
-              AppLanguage.of(context).translateDynamic(f),
-              style: TextStyle(
-                color: isSel ? Colors.white : AppTheme.textDark,
-                fontWeight: isSel ? FontWeight.bold : FontWeight.w600,
-                fontSize: 12.sp,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        children: filters.map((f) {
+          final isSel = _selectedFilter == f;
+          return Padding(
+            padding: EdgeInsets.only(right: 8.w),
+            child: ChoiceChip(
+              label: Text(
+                AppLanguage.of(context).translateDynamic(f),
+                style: TextStyle(
+                  color: isSel ? Colors.white : AppTheme.textDark,
+                  fontWeight: isSel ? FontWeight.bold : FontWeight.w600,
+                  fontSize: 12.sp,
+                ),
               ),
+              selected: isSel,
+              selectedColor: const Color(0xFF27AE60),
+              backgroundColor: Colors.white,
+              onSelected: (sel) {
+                if (sel) setState(() => _selectedFilter = f);
+              },
             ),
-            selected: isSel,
-            selectedColor: const Color(0xFF27AE60),
-            backgroundColor: Colors.white,
-            onSelected: (sel) {
-              if (sel) setState(() => _selectedFilter = f);
-            },
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -299,9 +303,13 @@ class _RemindersScreenState extends State<RemindersScreen> {
                       children: [
                         const Icon(Icons.notifications_active_rounded, size: 13, color: Color(0xFF27AE60)),
                         SizedBox(width: 4.w),
-                        Text(
-                          '${AppLanguage.of(context).translateDynamic(item['alarmLabel'])} (${AppLanguage.of(context).translateDynamic(item['reminder'])})',
-                          style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold, color: const Color(0xFF27AE60)),
+                        Expanded(
+                          child: Text(
+                            '${AppLanguage.of(context).translateDynamic(item['alarmLabel'])} (${AppLanguage.of(context).translateDynamic(item['reminder'])})',
+                            style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold, color: const Color(0xFF27AE60)),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

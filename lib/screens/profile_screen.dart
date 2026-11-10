@@ -253,9 +253,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${appLang.translate('my_registered_pets')} (${GlobalState.pets.length})',
-                    style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
+                  Expanded(
+                    child: Text(
+                      '${appLang.translate('my_registered_pets')} (${GlobalState.pets.length})',
+                      style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   TextButton.icon(
                     onPressed: () {
@@ -265,7 +269,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     label: Text(appLang.translate('manage')),
                     style: TextButton.styleFrom(
                       foregroundColor: AppTheme.primary,
-                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
+                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 11.5.sp),
                     ),
                   ),
                 ],

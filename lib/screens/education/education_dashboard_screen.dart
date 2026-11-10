@@ -693,13 +693,25 @@ class _EducationDashboardScreenState extends State<EducationDashboardScreen> {
         SizedBox(width: 12.w),
         const Icon(Icons.pets, color: Color(0xFF1B5E20), size: 28),
         SizedBox(width: 10.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(appLang.translate('app_title'), style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark)),
-            Text(appLang.translate('education_sub'), style: TextStyle(fontSize: 11.sp, color: AppTheme.textLight)),
-          ],
-        )
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                appLang.translate('app_title'),
+                style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                appLang.translate('education_sub'),
+                style: TextStyle(fontSize: 11.sp, color: AppTheme.textLight),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

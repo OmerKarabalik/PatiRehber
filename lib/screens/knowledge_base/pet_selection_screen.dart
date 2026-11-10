@@ -23,7 +23,10 @@ class PetSelectionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: Text('${appLang.translateDynamic(topic)} - ${appLang.translateDynamic('Tür Seçimi')}'),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text('${appLang.translateDynamic(topic)} - ${appLang.translateDynamic('Tür Seçimi')}'),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () => Navigator.pop(context),

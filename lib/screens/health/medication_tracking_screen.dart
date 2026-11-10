@@ -328,13 +328,25 @@ class _MedicationTrackingScreenState extends State<MedicationTrackingScreen> {
         SizedBox(width: 12.w),
         Icon(Icons.pets, color: Color(0xFF1B5E20), size: 32),
         SizedBox(width: 12.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(AppLanguage.of(context).translate('app_title'), style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark)),
-            Text(AppLanguage.of(context).translate('app_subtitle'), style: TextStyle(fontSize: 11.sp, color: AppTheme.textLight)),
-          ],
-        )
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppLanguage.of(context).translate('app_title'),
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                AppLanguage.of(context).translate('app_subtitle'),
+                style: TextStyle(fontSize: 11.sp, color: AppTheme.textLight),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

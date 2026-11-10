@@ -105,13 +105,25 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> {
         SizedBox(width: 10.w),
         const Icon(Icons.pets, color: AppTheme.primary, size: 36),
         SizedBox(width: 12.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(appLang.translate('health'), style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark)),
-            Text(appLang.translate('health_sub'), style: TextStyle(fontSize: 12.sp, color: AppTheme.textLight)),
-          ],
-        )
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                appLang.translate('health'),
+                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                appLang.translate('health_sub'),
+                style: TextStyle(fontSize: 12.sp, color: AppTheme.textLight),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

@@ -727,19 +727,19 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
       appBar: AppBar(
         backgroundColor: AppTheme.background,
         elevation: 0,
-        leadingWidth: 115.w,
+        leadingWidth: 95.w,
         leading: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (Navigator.canPop(context))
               IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.textDark, size: 20),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.textDark, size: 18),
                 onPressed: () => Navigator.pop(context),
-                padding: EdgeInsets.only(left: 8.w, right: 4.w),
+                padding: EdgeInsets.only(left: 6.w, right: 2.w),
                 constraints: const BoxConstraints(),
               )
             else
-              SizedBox(width: 8.w),
+              SizedBox(width: 6.w),
             Flexible(
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -748,9 +748,12 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
             ),
           ],
         ),
-        title: Text(
-          appLang.translateDynamic('Pati Kimliği'),
-          style: TextStyle(color: AppTheme.textDark, fontWeight: FontWeight.w900, fontSize: 17.5.sp),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            appLang.translateDynamic('Pati Kimliği'),
+            style: TextStyle(color: AppTheme.textDark, fontWeight: FontWeight.w900, fontSize: 16.5.sp),
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -1513,7 +1516,7 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
       onTap: onTap,
       borderRadius: BorderRadius.circular(18.r),
       child: Container(
-        padding: EdgeInsets.all(14.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(18.r),
@@ -1522,31 +1525,41 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(10.w),
+              padding: EdgeInsets.all(9.w),
               decoration: BoxDecoration(
                 color: color.withOpacity(0.12),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: color, size: 22),
+              child: Icon(icon, color: color, size: 20),
             ),
-            SizedBox(width: 10.w),
+            SizedBox(width: 8.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold, color: AppTheme.textDark),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      title,
+                      style: TextStyle(fontSize: 12.5.sp, fontWeight: FontWeight.bold, color: AppTheme.textDark),
+                      maxLines: 1,
+                    ),
                   ),
                   SizedBox(height: 2.h),
-                  Text(
-                    count,
-                    style: TextStyle(fontSize: 11.sp, color: AppTheme.textLight, fontWeight: FontWeight.w600),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      count,
+                      style: TextStyle(fontSize: 10.5.sp, color: AppTheme.textLight, fontWeight: FontWeight.w600),
+                      maxLines: 1,
+                    ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios_rounded, size: 13, color: Colors.grey),
+            const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.grey),
           ],
         ),
       ),
@@ -1567,15 +1580,21 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  const Icon(Icons.show_chart_rounded, color: Color(0xFF27AE60), size: 22),
-                  SizedBox(width: 8.w),
-                  Text(
-                    AppLanguage.of(context).translate('weight_history'),
-                    style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
-                  ),
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.show_chart_rounded, color: Color(0xFF27AE60), size: 22),
+                    SizedBox(width: 8.w),
+                    Flexible(
+                      child: Text(
+                        AppLanguage.of(context).translate('weight_history'),
+                        style: TextStyle(fontSize: 14.5.sp, fontWeight: FontWeight.w900, color: AppTheme.textDark),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               TextButton.icon(
                 onPressed: () => _showAddWeightModal(petName),
@@ -1583,7 +1602,8 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
                 label: Text(AppLanguage.of(context).translate('add_weight_record')),
                 style: TextButton.styleFrom(
                   foregroundColor: const Color(0xFF27AE60),
-                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
+                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 11.5.sp),
                 ),
               ),
             ],

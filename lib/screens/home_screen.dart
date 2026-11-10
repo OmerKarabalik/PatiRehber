@@ -800,10 +800,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          appLang.translate('popular_topics'),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp, color: AppTheme.textDark),
+        Expanded(
+          child: Text(
+            appLang.translate('popular_topics'),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp, color: AppTheme.textDark),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
+        SizedBox(width: 8.w),
         InkWell(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) => EducationDashboardScreen()));

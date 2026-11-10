@@ -19,7 +19,10 @@ class ArticleListScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        title: Text('${appLang.translatePetType(petType)} ${appLang.translateDynamic(topic)}'),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text('${appLang.translatePetType(petType)} ${appLang.translateDynamic(topic)}'),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () => Navigator.pop(context),
