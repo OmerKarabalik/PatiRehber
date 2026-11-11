@@ -36,6 +36,8 @@ jobs:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+          FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "30"
+          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "5"
         run: |
           # 1. Create temporary keychain
           export KEYCHAIN_PATH=$RUNNER_TEMP/build.keychain
