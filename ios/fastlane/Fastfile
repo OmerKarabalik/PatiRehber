@@ -10,25 +10,16 @@ platform :ios do
       is_key_content_base64: false
     )
 
-    # 1. Automatically revoke any orphaned distribution certificates without private keys
+    # 1. Automatically clean up any orphaned distribution certificates via App Store Connect API
     UI.message("Checking for orphaned distribution certificates...")
-    begin
-      Spaceship::ConnectAPI.token = api_key
-      certs = Spaceship::ConnectAPI::Certificate.all
-      certs.each do |cert|
-        type = cert.certificate_type.to_s.upcase
-        if type.include?("DISTRIBUTION")
-          UI.message("Revoking orphaned cert: #{cert.id} (#{cert.display_name})...")
-          begin
-            cert.delete!
-          rescue => del_err
-            UI.message("Fallback delete for #{cert.id}: #{del_err.message}")
-            Spaceship::ConnectAPI.delete_certificate(certificate_id: cert.id)
-          end
-        end
+    Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.from(hash: api_key)
+    certs = Spaceship::ConnectAPI::Certificate.all
+    certs.each do |cert|
+      type = cert.certificate_type.to_s.upcase
+      if type == "DISTRIBUTION" || type == "IOS_DISTRIBUTION"
+        UI.message("Revoking orphaned distribution cert: #{cert.id} (#{cert.display_name})...")
+        cert.delete!
       end
-    rescue => ex
-      UI.important("Notice while checking certificates: #{ex.message}")
     end
 
     # 2. Generate brand new certificate and private key in the runner keychain
@@ -39,11 +30,12 @@ platform :ios do
       keychain_password: ENV["KEYCHAIN_PASSWORD"]
     )
 
-    # 3. Generate/fetch provisioning profile
+    # 3. Generate/fetch provisioning profile linked to the new certificate
     get_provisioning_profile(
       api_key: api_key,
       app_identifier: "com.patirehber.patiRehber",
-      development: false
+      development: false,
+      force: true
     )
 
     profile_path = ENV["SIGH_PROFILE_PATH"]
@@ -54,7 +46,7 @@ platform :ios do
     sh("mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles")
     sh("cp \"#{profile_path}\" \"$HOME/Library/MobileDevice/Provisioning Profiles/#{profile_uuid}.mobileprovision\"")
 
-    # 5. Update Xcode code signing settings for Runner target
+    # 5. Update Xcode code signing settings for Runner target (Release only)
     update_code_signing_settings(
       use_automatic_signing: false,
       path: "Runner.xcodeproj",
@@ -62,7 +54,8 @@ platform :ios do
       profile_uuid: profile_uuid,
       code_sign_identity: "Apple Distribution",
       bundle_identifier: "com.patirehber.patiRehber",
-      targets: ["Runner"]
+      targets: ["Runner"],
+      build_configurations: ["Release"]
     )
 
     # 6. Build and archive IPA
