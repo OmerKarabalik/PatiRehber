@@ -31,20 +31,24 @@ platform :ios do
     )
 
     # 3. Generate/fetch provisioning profile linked to the new certificate
-    get_provisioning_profile(
+    returned_path = get_provisioning_profile(
       api_key: api_key,
       app_identifier: "com.patirehber.patiRehber",
       development: false,
       force: true
     )
 
-    profile_path = ENV["SIGH_PROFILE_PATH"]
-    profile_uuid = ENV["SIGH_UUID"]
-    profile_name = ENV["SIGH_NAME"]
+    profile_path = lane_context[SharedValues::SIGH_PROFILE_PATH] || returned_path
+    profile_uuid = lane_context[SharedValues::SIGH_UUID] || lane_context[SharedValues::SIGH_UDID] || ENV["SIGH_UUID"]
+    profile_name = lane_context[SharedValues::SIGH_NAME] || ENV["SIGH_NAME"]
 
-    # 4. Install provisioning profile into macOS system directory
-    sh("mkdir -p ~/Library/MobileDevice/Provisioning\\ Profiles")
+    UI.message("Using profile path=#{profile_path} uuid=#{profile_uuid} name=#{profile_name}")
+
+    # 4. Install provisioning profile into both Xcode <=15 and Xcode 16+ system directories
+    sh("mkdir -p \"$HOME/Library/MobileDevice/Provisioning Profiles\"")
+    sh("mkdir -p \"$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles\"")
     sh("cp \"#{profile_path}\" \"$HOME/Library/MobileDevice/Provisioning Profiles/#{profile_uuid}.mobileprovision\"")
+    sh("cp \"#{profile_path}\" \"$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles/#{profile_uuid}.mobileprovision\"")
 
     # 5. Update Xcode code signing settings for Runner target (Release only)
     update_code_signing_settings(
