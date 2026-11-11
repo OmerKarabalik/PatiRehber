@@ -39,7 +39,7 @@
 	<string>Size ve sevimli dostunuza özel içerik ve öneriler sunabilmek için izin gereklidir.</string>
 	<!-- Google AdMob iOS Configuration -->
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458782514</string>
+	<string>ca-app-pub-5160530830178108~8435098526</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

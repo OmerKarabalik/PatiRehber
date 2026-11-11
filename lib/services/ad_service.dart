@@ -7,8 +7,9 @@ import '../models/global_state.dart';
 class AdService {
   static bool _isInitialized = false;
 
-  // Rewarded Ad state
+  // Rewarded Ad state (Android: RewardedAd, iOS: RewardedInterstitialAd)
   static RewardedAd? _rewardedAd;
+  static RewardedInterstitialAd? _rewardedInterstitialAd;
   static bool _isRewardedLoading = false;
 
   // Interstitial Ad state
@@ -22,14 +23,16 @@ class AdService {
   static const Duration cooldownDuration = Duration(minutes: 3); // İki reklam arası en az 3 dk
 
   // --- REKLAM BİRİM KODLARI (AD UNIT IDS) ---
-  // Uygulama Kimliği (App ID): ca-app-pub-5160530830178108~7553810435
+  // Android App ID: ca-app-pub-5160530830178108~7553810435
+  // iOS App ID: ca-app-pub-5160530830178108~8435098526
   static String get rewardedAdUnitId {
     if (kIsWeb) return '';
     if (Platform.isAndroid) {
       // PDF Odullu Reklam
       return 'ca-app-pub-5160530830178108/3562806563';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/1712485313';
+      // PatiRehber iOS Odullu (Rewarded Interstitial)
+      return 'ca-app-pub-5160530830178108/3905660724';
     }
     return '';
   }
@@ -40,7 +43,8 @@ class AdService {
       // PatiRehber Akilli Gecis
       return 'ca-app-pub-5160530830178108/2956301902';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/4411468910';
+      // PatiRehber iOS Gecis
+      return 'ca-app-pub-5160530830178108/4971330386';
     }
     return '';
   }
@@ -51,7 +55,8 @@ class AdService {
       // PatiRehber Alt Banner
       return 'ca-app-pub-5160530830178108/4998257294';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/2934735716';
+      // PatiRehber iOS Banner
+      return 'ca-app-pub-5160530830178108/5410314086';
     }
     return '';
   }
@@ -74,13 +79,33 @@ class AdService {
   // 1. ÖDÜLLÜ REKLAM (REWARDED AD)
   // ==========================================
 
-  /// Pre-loads a rewarded video ad in the background
+  /// Pre-loads a rewarded ad in the background
   static void loadRewardedAd() {
-    if (kIsWeb || _isRewardedLoading || _rewardedAd != null) return;
+    if (kIsWeb || _isRewardedLoading || _rewardedAd != null || _rewardedInterstitialAd != null) return;
     final adUnitId = rewardedAdUnitId;
     if (adUnitId.isEmpty) return;
 
     _isRewardedLoading = true;
+    if (Platform.isIOS) {
+      RewardedInterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            _rewardedInterstitialAd = ad;
+            _isRewardedLoading = false;
+            debugPrint('AdMob: iOS Ödüllü Geçiş Reklamı Hazır.');
+          },
+          onAdFailedToLoad: (error) {
+            _rewardedInterstitialAd = null;
+            _isRewardedLoading = false;
+            debugPrint('AdMob: iOS Ödüllü Geçiş Reklamı Yüklenemedi: $error');
+          },
+        ),
+      );
+      return;
+    }
+
     RewardedAd.load(
       adUnitId: adUnitId,
       request: const AdRequest(),
@@ -99,7 +124,7 @@ class AdService {
     );
   }
 
-  /// Displays the rewarded video ad and triggers [onUserEarnedReward] when completed
+  /// Displays the rewarded ad and triggers [onUserEarnedReward] when completed
   static void showRewardedAd({
     required BuildContext context,
     required VoidCallback onUserEarnedReward,
@@ -107,6 +132,32 @@ class AdService {
   }) {
     if (kIsWeb) {
       onUserEarnedReward();
+      return;
+    }
+
+    if (Platform.isIOS && _rewardedInterstitialAd != null) {
+      _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          _rewardedInterstitialAd = null;
+          loadRewardedAd();
+          onAdDismissed?.call();
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          _rewardedInterstitialAd = null;
+          loadRewardedAd();
+          onUserEarnedReward();
+        },
+      );
+
+      _rewardedInterstitialAd!.show(
+        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+          debugPrint('AdMob: iOS ödülü kazandı: ${reward.amount} ${reward.type}');
+          onUserEarnedReward();
+        },
+      );
+      _rewardedInterstitialAd = null;
       return;
     }
 
