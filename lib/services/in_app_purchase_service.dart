@@ -139,50 +139,23 @@ class InAppPurchaseService {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Row(
             children: const [
-              Icon(Icons.storefront_rounded, color: Color(0xFFF39C12)),
+              Icon(Icons.error_outline_rounded, color: Color(0xFFE74C3C)),
               SizedBox(width: 8),
-              Text('Google Play Ödeme Sistemi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text('Ödeme Servisi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             ],
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Uygulama Google Play Console\'a yüklendiğinde ve mağaza ürünleri onaylandığında doğrudan Google Kredi Kartı / Play Bakiye ödeme penceresi açılacaktır.',
-                style: TextStyle(fontSize: 13, height: 1.4),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.amber.shade50,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.amber.shade300),
-                ),
-                child: const Text(
-                  '💡 Geliştirici / Test Modu:\nReklamsız deneyimi ve PatiPlus özelliklerini test etmek için aşağıdaki butona basabilirsiniz.',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF78350F)),
-                ),
-              ),
-            ],
+          content: const Text(
+            'Mağaza ödeme sistemine şu anda ulaşılamıyor veya ürün bilgisi doğrulanamadı. Lütfen internet bağlantınızı kontrol edip biraz sonra tekrar deneyiniz.',
+            style: TextStyle(fontSize: 13, height: 1.4),
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('Kapat'),
-            ),
             ElevatedButton(
-              onPressed: () async {
-                await GlobalState.setPatiPlus(true);
-                if (ctx.mounted) Navigator.pop(ctx);
-                onSuccess();
-              },
+              onPressed: () => Navigator.pop(ctx),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF27AE60),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
-              child: const Text('Test: PatiPlus Aktif Et', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              child: const Text('Tamam', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             ),
           ],
         );
