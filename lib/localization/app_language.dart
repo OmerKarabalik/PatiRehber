@@ -292,7 +292,7 @@ class AppLanguage extends ChangeNotifier {
         return '149 ₽';
       case 'tr':
       default:
-        return '29.99 ₺';
+        return '49.99 ₺';
     }
   }
 
@@ -308,7 +308,7 @@ class AppLanguage extends ChangeNotifier {
         return '449 ₽';
       case 'tr':
       default:
-        return '99.99 ₺';
+        return '119.99 ₺';
     }
   }
 
