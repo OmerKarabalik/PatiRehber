@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: appLang.translateDynamic('Veteriner & Acil Klinikler'),
         category: appLang.translate('clinics'),
         subtitle: appLang.translateDynamic('7/24 nöbetçi hayvan hastaneleri, yol tarifi ve arama'),
-        icon: Icons.local_hospital_rounded,
+        icon: Icons.domain_rounded,
         color: const Color(0xFFE74C3C),
         keywords: ['veteriner', 'klinik', 'nöbetçi', 'acil klinik', 'hastane', 'doktor', 'kadıköy', 'beşiktaş', 'çankaya', 'muratpaşa', 'karşıyaka', 'clinic', 'vet', 'tierarzt'],
         destination: () => const SitterSearchScreen(),
@@ -709,7 +709,7 @@ class _HomeScreenState extends State<HomeScreen> {
       {'key': 'care', 'title': appLang.translate('care'), 'subtitle': appLang.translate('care_sub'), 'icon': Icons.spa_rounded, 'color': AppTheme.iconCare},
       {'key': 'education', 'title': appLang.translate('education'), 'subtitle': appLang.translate('education_sub'), 'icon': Icons.school_rounded, 'color': AppTheme.iconEducation},
       {'key': 'behavior', 'title': appLang.translate('behavior'), 'subtitle': appLang.translate('behavior_sub'), 'icon': Icons.pets_rounded, 'color': const Color(0xFF16A085)},
-      {'key': 'sitters', 'title': appLang.translate('clinics'), 'subtitle': appLang.translate('clinics_sub'), 'icon': Icons.local_hospital_rounded, 'color': const Color(0xFFE74C3C)},
+      {'key': 'sitters', 'title': appLang.translate('clinics'), 'subtitle': appLang.translate('clinics_sub'), 'icon': Icons.domain_rounded, 'color': const Color(0xFFE74C3C)},
     ];
 
     final int columns = 3;

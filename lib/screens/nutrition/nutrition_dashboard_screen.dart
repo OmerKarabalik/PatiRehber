@@ -2692,7 +2692,7 @@ class _NutritionDashboardScreenState extends State<NutritionDashboardScreen> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.local_hospital_rounded, color: Color(0xFFD35400), size: 20),
+                            const Icon(Icons.verified_user_rounded, color: Color(0xFFD35400), size: 20),
                             SizedBox(width: 10.w),
                             Expanded(
                               child: Column(

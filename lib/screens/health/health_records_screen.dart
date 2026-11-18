@@ -280,7 +280,7 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
                       controller: doctorController,
                       decoration: InputDecoration(
                         labelText: appLang.translate('vet_clinic_address'),
-                        prefixIcon: const Icon(Icons.local_hospital_rounded),
+                        prefixIcon: const Icon(Icons.domain_rounded),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(14.r)),
                       ),
                     ),
@@ -880,7 +880,7 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.local_hospital_rounded, size: 14, color: categoryColor),
+                    Icon(Icons.domain_rounded, size: 14, color: categoryColor),
                     SizedBox(width: 6.w),
                     Expanded(
                       child: Text(
