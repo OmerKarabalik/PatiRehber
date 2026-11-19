@@ -49,13 +49,13 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
   IconData _getIconForCategory(String category) {
     switch (category) {
       case 'Muayene':
-        return Icons.medical_services_rounded;
+        return Icons.monitor_heart_rounded;
       case 'Check-up':
         return Icons.verified_user_rounded;
       case 'Aşı/Parazit':
         return Icons.vaccines_rounded;
       case 'Ameliyat':
-        return Icons.healing_rounded;
+        return Icons.content_cut_rounded;
       case 'Tahlil':
         return Icons.biotech_rounded;
       case 'Diş':

@@ -169,7 +169,7 @@ class _VetAppointmentsScreenState extends State<VetAppointmentsScreen> {
                       controller: titleController,
                       decoration: InputDecoration(
                         labelText: appLang.translate('appointment_reason'),
-                        prefixIcon: const Icon(Icons.medical_services_outlined),
+                        prefixIcon: const Icon(Icons.assignment_rounded),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
                       ),
                       onChanged: (val) {

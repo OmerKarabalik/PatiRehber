@@ -550,7 +550,7 @@ class _NutritionDashboardScreenState extends State<NutritionDashboardScreen> {
     {
       'name': 'Pişmiş Kemikler',
       'category': '⚠️ Dikkatli Verilmeli',
-      'icon': Icons.health_and_safety_rounded,
+      'icon': Icons.warning_amber_rounded,
       'color': const Color(0xFFE67E22),
       'shortDesc': 'Pişince sertleşip kıymıklanır; boğazı, mideyi veya bağırsağı yırtabilir.',
       'detail': 'Tavuk ve kuzu kemikleri fırınlanıp kaynatıldığında esnekliğini kaybeder. Sivri uçlar yemek borusunu delip acil cerrahi müdahale gerektirebilir.',
@@ -1937,7 +1937,7 @@ class _NutritionDashboardScreenState extends State<NutritionDashboardScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.health_and_safety_rounded, color: Color(0xFFC0392B), size: 20),
+                const Icon(Icons.warning_amber_rounded, color: Color(0xFFC0392B), size: 20),
                 SizedBox(width: 8.w),
                 Text(
                   appLang.translateDynamic('Zehirli ve Güvenli Gıdalar'),
@@ -2325,7 +2325,7 @@ class _NutritionDashboardScreenState extends State<NutritionDashboardScreen> {
         'category': 'Temel Beslenme',
         'badge': 'YAŞ DÖNEMİ',
         'badgeColor': const Color(0xFF1E824C),
-        'icon': Icons.health_and_safety_rounded,
+        'icon': Icons.verified_user_rounded,
         'iconColor': const Color(0xFF27AE60),
         'image': 'assets/images/nutrition_food.jpg',
         'fullDescription':

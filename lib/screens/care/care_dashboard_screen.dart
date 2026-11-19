@@ -404,7 +404,7 @@ class _CareDashboardScreenState extends State<CareDashboardScreen> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(Icons.health_and_safety_rounded, color: Color(0xFF16A085), size: 24),
+                              const Icon(Icons.lightbulb_rounded, color: Color(0xFF16A085), size: 24),
                               SizedBox(width: 12.w),
                               Expanded(
                                 child: Column(

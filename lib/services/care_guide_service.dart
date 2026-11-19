@@ -166,7 +166,7 @@ class CareGuideService {
           id: 'dog_nails',
           title: 'Tırnak Kesimi & Pati Bakımı',
           subtitle: 'Canlı damar kontrolü ve basış bozukluğunu önleme',
-          icon: Icons.healing_rounded,
+          icon: Icons.pets_rounded,
           color: const Color(0xFFE67E22),
           frequency: '3 - 4 haftada bir (Yere bastığında tık tık ses geliyorsa uzamıştır)',
           whyImportant:
@@ -230,7 +230,7 @@ class CareGuideService {
           id: 'dog_teeth',
           title: 'Diş & Ağız Sağlığı',
           subtitle: 'Tartar önleme, diş eti iltihabı ve taze nefes',
-          icon: Icons.medical_services_rounded,
+          icon: Icons.sentiment_very_satisfied_rounded,
           color: const Color(0xFFE74C3C),
           frequency: 'Haftada en az 2-3 kez (İdeal olan her gün 1 dakikadır)',
           whyImportant:

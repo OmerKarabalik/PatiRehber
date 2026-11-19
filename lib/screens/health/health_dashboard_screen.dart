@@ -186,7 +186,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> {
         'key': 'vet_appointments',
         'title': appLang.translate('vet_appointments'),
         'subtitle': appLang.translate('vet_appointments_sub'),
-        'icon': Icons.medical_services_outlined,
+        'icon': Icons.event_available_rounded,
         'iconColor': Color(0xFFF39C12),
         'bgColor': Color(0xFFF39C12).withOpacity(0.1),
       },

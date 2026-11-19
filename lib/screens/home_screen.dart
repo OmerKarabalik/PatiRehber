@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: appLang.translateDynamic('Acil Durum & İlk Yardım'),
         category: appLang.translateDynamic('Acil Durum'),
         subtitle: appLang.translateDynamic('Zehirlenme, kanama, sıcak çarpması ve kırık müdahalesi'),
-        icon: Icons.emergency_rounded,
+        icon: Icons.notifications_active_rounded,
         color: const Color(0xFFC0392B),
         keywords: ['acil', 'zehirlenme', 'kanama', 'sıcak çarpması', 'kaza', 'düşme', 'nefes', 'ilk yardım', 'koma', 'emergency', 'notfall', 'urgence'],
         destination: () => EmergencyScreen(),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: appLang.translateDynamic('Hastalık Belirtileri & Teşhis'),
         category: appLang.translate('health'),
         subtitle: appLang.translateDynamic('İştahsızlık, halsizlik, kaşınma ve alarm veren semptomlar'),
-        icon: Icons.health_and_safety_rounded,
+        icon: Icons.search_rounded,
         color: const Color(0xFFE67E22),
         keywords: ['belirti', 'hastalık', 'iştahsızlık', 'kusma', 'ishal', 'halsizlik', 'kaşınma', 'tüy dökme', 'ateş', 'symptom', 'disease'],
         destination: () => DiseaseSymptomsScreen(),
@@ -704,7 +704,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildGridMenu(BuildContext context, AppLanguage appLang, double screenWidth) {
     final List<Map<String, dynamic>> categories = [
-      {'key': 'health', 'title': appLang.translate('health'), 'subtitle': appLang.translate('health_sub'), 'icon': Icons.medical_services_rounded, 'color': AppTheme.iconHealth},
+      {'key': 'health', 'title': appLang.translate('health'), 'subtitle': appLang.translate('health_sub'), 'icon': Icons.favorite_rounded, 'color': AppTheme.iconHealth},
       {'key': 'nutrition', 'title': appLang.translate('nutrition'), 'subtitle': appLang.translate('nutrition_sub'), 'icon': Icons.food_bank_rounded, 'color': AppTheme.iconNutrition},
       {'key': 'care', 'title': appLang.translate('care'), 'subtitle': appLang.translate('care_sub'), 'icon': Icons.spa_rounded, 'color': AppTheme.iconCare},
       {'key': 'education', 'title': appLang.translate('education'), 'subtitle': appLang.translate('education_sub'), 'icon': Icons.school_rounded, 'color': AppTheme.iconEducation},

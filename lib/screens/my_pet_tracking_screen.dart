@@ -406,7 +406,7 @@ class _MyPetTrackingScreenState extends State<MyPetTrackingScreen> {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.health_and_safety_rounded, color: isNeutered ? const Color(0xFF27AE60) : Colors.grey, size: 22),
+                              Icon(Icons.verified_user_rounded, color: isNeutered ? const Color(0xFF27AE60) : Colors.grey, size: 22),
                               SizedBox(width: 10.w),
                               Text(AppLanguage.of(context).translate('is_neutered_question'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.sp)),
                             ],
