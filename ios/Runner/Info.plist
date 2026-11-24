@@ -35,8 +35,6 @@
 	<string>Evcil hayvanınızın fotoğrafını seçebilmek için fotoğraf galerisi izni gereklidir.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Evcil hayvanınızın dijital pasaport ve karne belgelerini kaydedebilmeniz için galeri izni gereklidir.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Size ve sevimli dostunuza özel içerik ve öneriler sunabilmek için izin gereklidir.</string>
 	<!-- Google AdMob iOS Configuration -->
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5160530830178108~8435098526</string>
