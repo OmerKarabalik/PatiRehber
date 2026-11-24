@@ -281,6 +281,9 @@ class AppLanguage extends ChangeNotifier {
   }
 
   String get priceCoffee {
+    if (kIsWeb || defaultTargetPlatform == TargetPlatform.iOS) {
+      return '\$1.99';
+    }
     switch (_currentLanguage) {
       case 'en':
         return '\$1.99';
@@ -297,6 +300,9 @@ class AppLanguage extends ChangeNotifier {
   }
 
   String get pricePatiPlus {
+    if (kIsWeb || defaultTargetPlatform == TargetPlatform.iOS) {
+      return '\$4.99';
+    }
     switch (_currentLanguage) {
       case 'en':
         return '\$4.99';
