@@ -59,3 +59,33 @@ jobs:
         with:
           name: PatiRehber-iOS-AppStore-IPA
           path: build/ios/ipa/*.ipa
+
+  build-simulator-appetize:
+    name: Build iOS Simulator Zip for Appetize
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build iOS Simulator App
+        run: |
+          flutter build ios --simulator --debug
+          cd build/ios/iphonesimulator
+          zip -r Runner.app.zip Runner.app
+          mv Runner.app.zip ../../../Runner.app.zip
+
+      - name: Upload Appetize Simulator Zip Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PatiRehber-iOS-Simulator-Appetize
+          path: Runner.app.zip
